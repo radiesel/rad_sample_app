@@ -10,8 +10,10 @@
 <body>
   <%= render 'layouts/header' %>
   <div class="container">
-    <%= yield %>
-    <%= render 'layouts/footer' %>
-  </div>
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+      <%= debug(params) if Rails.env.development? %>
+  </div> <!-- eof container-->
+  <!-- end Listing 7.1 -->
 </body>
 </html>

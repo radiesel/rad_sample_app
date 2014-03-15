@@ -14,8 +14,8 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) } # Listing 8.15
   it { should respond_to(:authenticate) }
-
   it { should be_valid}
 
   describe "when name is not present" do
@@ -88,6 +88,7 @@ describe "with a password that's too short" do
       specify { expect(user_for_invalid_password).to be_false }
     end
   end
+  # Listing 6.30
   describe "email address with mixed case" do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
@@ -96,6 +97,11 @@ describe "with a password that's too short" do
       @user.save
       expect(@user.reload.email).to eq mixed_case_email.downcase
     end
-  end
-
+  end # end  Listing 6.30
+  
+  # Listing 8.17
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end #  Listing 8.17
 end
