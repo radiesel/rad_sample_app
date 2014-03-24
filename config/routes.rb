@@ -6,8 +6,8 @@ RadSampleApp::Application.routes.draw do
   root  to: 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   # end Listing 7.3
-  match '/signin',  to: 'sessions#new',         via: 'get'
-  match '/signout', to: 'sessions#destroy',     via: 'delete'  
+  match '/signin',  to: 'sessions#new',         via: 'get' # Listing 8.2
+  match '/signout', to: 'sessions#destroy',     via: 'delete'  # Listing 8.2
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'
   match '/contact', to: 'static_pages#contact', via: 'get'

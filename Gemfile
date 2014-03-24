@@ -24,7 +24,8 @@ group :test do
   gem 'selenium-webdriver', '2.35.1'
   gem 'capybara', '2.1.0'
   gem 'factory_girl_rails', '4.2.1' # Listing 7.7
-#  gem 'cucumber-rails', '1.3.0', :require => false
+  gem 'cucumber-rails', '1.3.0', :require => false # Listing 8.31
+  gem 'database_cleaner', github: 'bmabey/database_cleaner' # Listing 8.31
 
  # Uncomment this line on OS X.
   # gem 'growl', '1.0.3'

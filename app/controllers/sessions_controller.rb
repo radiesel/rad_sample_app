@@ -18,6 +18,10 @@ class SessionsController < ApplicationController
   end # end Listing 8.10
 
   def destroy
+    # Listing 8.29
+    sign_out  
+    redirect_to root_url
+    # end Listing 8.29
   end
   # end Listing 8.3
 end # end SessionsController

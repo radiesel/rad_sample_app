@@ -16,4 +16,6 @@
 /tmp
 
 .codeintel/codeintel.log
-/.codeintel
+/.codeintel/*
+.codeintel/db/stdlibs/ruby-1.9.3/toplevelname_index
+.codeintel/db/stdlibs/ruby-1.9.3/toplevelprefix_index

@@ -44,8 +44,12 @@ describe "Authentication" do
    #  it { should have_link('Settings',    href: edit_user_path(user)) }
       it { should have_link('Sign out',    href: signout_path) }
       it { should_not have_link('Sign in', href: signin_path) }
-    end
-    # End Listing 8.6
-    
+      
+      # Listing 8.28
+      describe "followed by signout" do
+        before { click_link "Sign out" }
+        it { should have_link('Sign in') }
+      end # end Listing 8.28
+    end # End Listing 8.6
   end # end signin
 end  # end "Authentication"
