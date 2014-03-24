@@ -1,3 +1,23 @@
-# listing 7.4
-<%= @user.name %>, <%= @user.email %>
-# end # listing 7.4
+<%# listing 7.14 %>
+<% provide(:title, @user.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+        <%= gravatar_for @user %>
+        <%= @user.name %>
+      </h1>
+    </section>
+  </aside>
+</div>
+<%# end listing 7.14 %>
+<%# listing 7.12 %>
+<%# provide(:title, @user.name) %>
+<%#  <h1>  %>
+  <%# = gravatar_for @user %>
+  <%#= @user.name %>
+<%# </h1>  %>
+<%# end listing 7.12 %>
+<%# listing 7.4 %>
+<%# = @user.name %>, <%# = @user.email %>
+<%# end listing 7.4 %>

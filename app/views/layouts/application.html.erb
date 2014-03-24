@@ -8,8 +8,15 @@
   <%= render 'layouts/shim' %>
 </head>
 <body>
+  <!-- Listing 7.1 -->
   <%= render 'layouts/header' %>
   <div class="container">
+      <!-- Listing 7.27 -->
+      <% flash.each do |key, value| %>
+      <!-- Listing 7.33 <div class="alert alert-<%= key %>"><%= value %></div> -->
+      <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+      <% end %>
+      <!-- end Listing 7.27 -->
       <%= yield %>
       <%= render 'layouts/footer' %>
       <%= debug(params) if Rails.env.development? %>

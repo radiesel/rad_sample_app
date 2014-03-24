@@ -33,4 +33,8 @@ RadSampleApp::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+  # Listing 7.11
+  # Speed up tests by lowering bcrypt's cost function.
+  ActiveModel::SecurePassword.min_cost = true
+  # end Listing 7.11
 end

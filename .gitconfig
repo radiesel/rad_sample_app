@@ -1,0 +1,5 @@
+[user]
+	name = radiesel
+	email = ric.diesel@gamil.com
+[core]
+	editor = subl -n -w
