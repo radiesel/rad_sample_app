@@ -1,5 +1,7 @@
 [user]
-	name = radiesel
+	name = Ric Diesel
 	email = ric.diesel@gamil.com
 [core]
 	editor = subl -n -w
+[push]
+	default = simple
