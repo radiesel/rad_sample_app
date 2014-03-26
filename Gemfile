@@ -6,7 +6,12 @@ ruby '1.9.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 gem 'bootstrap-sass', '2.3.2.0'
+gem 'sprockets', '2.11.0'       # listing 9.28
 gem 'bcrypt-ruby', '3.1.2'
+gem 'faker', '1.1.2'            # listing 9.28
+gem 'will_paginate', '3.0.4'     # listing 9.30
+gem 'bootstrap-will_paginate', '0.0.9'     # listing 9.30
+
 
 # Use sqlite3 as the database for Active Record
 # gem 'pg', '0.15.1'
