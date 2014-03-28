@@ -127,8 +127,23 @@ describe "Authentication" do
           before { patch user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
         end
-      end
-    end # end Listing 9.11
+      end # end "in the Users controller"
+
+      # Listing 10.23
+      describe "in the Microposts controller" do
+
+        describe "submitting to the create action" do
+          before { post microposts_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete micropost_path(FactoryGirl.create(:micropost)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end # end Listing 10.23
+      
+    end # "for non-signed-in users" end Listing 9.11
     # Listing 9.13
     
     describe "as wrong user" do

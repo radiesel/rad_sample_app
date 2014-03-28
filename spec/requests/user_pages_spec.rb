@@ -72,11 +72,21 @@ describe "User pages" do
   # Listing 7.9
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
+    let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "Foo") } # Listing 10.16
+    let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "Bar") } # Listing 10.16
+
     before { visit user_path(user) }
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
-  end # end Listing 7.9
+
+    # Listing 10.16
+    describe "microposts" do
+      it { should have_content(m1.content) }
+      it { should have_content(m2.content) }
+      it { should have_content(user.microposts.count) }
+    end # end Listing 10.16
+  end # profile end Listing 7.9
 
 # Listing 7.16
 describe "signup" do

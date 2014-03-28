@@ -18,6 +18,8 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) } # Listing 9.38
 
+  it { should respond_to(:microposts) } # Listing 10.6
+  it { should respond_to(:feed) } # Listing 10.35
   it { should be_valid}
   it { should_not be_admin }  # Listing 9.38
   # Listing 9.38
@@ -116,4 +118,42 @@ describe "with a password that's too short" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end #  Listing 8.17
+
+  # Listing 10.10
+  describe "micropost associations" do
+
+    before { @user.save }
+    let!(:older_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_micropost) do
+      FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right microposts in the right order" do
+      expect(@user.microposts.to_a).to eq [newer_micropost, older_micropost]
+    end
+  
+  # Listing 10.12
+    it "should destroy associated microposts" do
+      microposts = @user.microposts.to_a
+      @user.destroy
+      expect(microposts).not_to be_empty
+      microposts.each do |micropost|
+        expect(Micropost.where(id: micropost.id)).to be_empty
+      end
+    end # end Listing 10.12
+
+    # Listing 10.35
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_micropost) }
+      its(:feed) { should include(older_micropost) }
+      its(:feed) { should_not include(unfollowed_post) }
+    end
+    # end Listing 10.35
+  end # end Listing 10.10
 end

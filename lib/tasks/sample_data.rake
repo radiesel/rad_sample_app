@@ -27,7 +27,12 @@ namespace :db do
     # Listing 9.40             email: "example@railstutorial.org",
     # Listing 9.40             password: "foobar",
     # Listing 9.40             password_confirmation: "foobar")
+    
+    # Listing 10.20
+    users = User.all(limit: 6)
+    50.times do
+      content = Faker::Lorem.sentence(5)
+      users.each { |user| user.microposts.create!(content: content) }
+    end # Listing 10.20
   end
-end
-
-# end Listing 9.29
+end # end Listing 9.29

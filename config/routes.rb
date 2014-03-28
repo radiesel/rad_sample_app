@@ -3,6 +3,7 @@ RadSampleApp::Application.routes.draw do
   # Listing 7.3
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :microposts, only: [:create, :destroy] # Listing 10.22
   root  to: 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   # end Listing 7.3

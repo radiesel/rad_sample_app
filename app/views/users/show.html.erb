@@ -9,6 +9,17 @@
       </h1>
     </section>
   </aside>
+<%# listing 10.17 %>
+  <div class="span8">
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol class="microposts">
+        <%= render @microposts %>
+      </ol>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
+<%# end listing 10.17 %>  
 </div>
 <%# end listing 7.14 %>
 <%# listing 7.12 %>
