@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   # Listing 10.13 has_many :microposts # Listing 10.8
   has_many :microposts, dependent: :destroy # Listing 10.13
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy # Listing 11.4
+  has_many :followed_users, through: :relationships, source: :followed # Listing 11.10
+  has_many :reverse_relationships, foreign_key: "followed_id", class_name:  "Relationship", dependent: :destroy # Listing 11.16
+  has_many :followers, through: :reverse_relationships, source: :follower # Listing 11.16 
   # Listing 6.31
   has_secure_password
   # Listing 8.18 before_save { email.downcase! } 
@@ -29,8 +33,24 @@ class User < ActiveRecord::Base
   # Listing 10.36
   def feed
     # This is preliminary. See "Following users" for the full implementation.
-    Micropost.where("user_id = ?", id)
+    # Listing 11.42 1Micropost.where("user_id = ?", id)
+    Micropost.from_users_followed_by(self) # Listing 11.42 
   end # end Listing 10.36
+
+  # Listing 11.12
+  def following?(other_user)
+    relationships.find_by(followed_id: other_user.id)
+  end
+
+  def follow!(other_user)
+    relationships.create!(followed_id: other_user.id)
+  end # end Listing 11.12
+
+  # Listing 11.14
+  def unfollow!(other_user)
+    relationships.find_by(followed_id: other_user.id).destroy
+  end # end Listing 11.14
+
   private
 
     def create_remember_token

@@ -17,9 +17,15 @@ describe User do
   it { should respond_to(:remember_token) } # Listing 8.15
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) } # Listing 9.38
-
   it { should respond_to(:microposts) } # Listing 10.6
   it { should respond_to(:feed) } # Listing 10.35
+  it { should respond_to(:relationships) } # Listing 11.3
+  it { should respond_to(:followed_users) } # Listing 11.9
+  it { should respond_to(:reverse_relationships) } # Listing 11.15
+  it { should respond_to(:followers) } # Listing 11.15
+  it { should respond_to(:following?) } # Listing 11.11
+  it { should respond_to(:follow!) } # Listing 11.11
+  it { should respond_to(:unfollow!) } # Listing 11.12
   it { should be_valid}
   it { should_not be_admin }  # Listing 9.38
   # Listing 9.38
@@ -82,7 +88,7 @@ describe User do
     it { should_not be_valid }
   end
 
-describe "with a password that's too short" do
+  describe "with a password that's too short" do
     before { @user.password = @user.password_confirmation = "a" * 5 }
     it { should be_invalid }
   end
@@ -134,7 +140,7 @@ describe "with a password that's too short" do
       expect(@user.microposts.to_a).to eq [newer_micropost, older_micropost]
     end
   
-  # Listing 10.12
+    # Listing 10.12
     it "should destroy associated microposts" do
       microposts = @user.microposts.to_a
       @user.destroy
@@ -149,11 +155,47 @@ describe "with a password that's too short" do
       let(:unfollowed_post) do
         FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
       end
+      # Listing 11.41
+      let(:followed_user) { FactoryGirl.create(:user) }
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
+      end # end Listing 11.41
 
       its(:feed) { should include(newer_micropost) }
       its(:feed) { should include(older_micropost) }
       its(:feed) { should_not include(unfollowed_post) }
+      # Listing 11.41
+            its(:feed) do
+        followed_user.microposts.each do |micropost|
+          should include(micropost)
+        end
+      end # end Listing 11.41
     end
     # end Listing 10.35
-  end # end Listing 10.10
+  end # end micropost associations Listing 10.10
+  # Listing 11.11
+  describe "following" do
+    let(:other_user) { FactoryGirl.create(:user) }
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+    
+    # Listing 11.15
+    describe "followed user" do
+      subject { other_user }
+      its(:followers) { should include(@user) }
+    end # end Listing 11.15
+  # Listing 11.13
+  describe "and unfollowing" do
+      before { @user.unfollow!(other_user) }
+
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+    end # end Listing 11.13
+  end # Listing end 11.11
 end

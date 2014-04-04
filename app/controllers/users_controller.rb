@@ -2,7 +2,9 @@ class UsersController < ApplicationController
   # Listing 9.12
   # Listing 9.34 before_action :signed_in_user, only: [:edit, :update]
   # Listing 9.44 before_action :signed_in_user, only: [:index, :edit, :update]
-  before_action :signed_in_user, only: [:index, :edit, :update, :destroy] # Listing 9.44 
+  # Listing  11.30 before_action :signed_in_user, only: [:index, :edit, :update, :destroy] # Listing 9.44 
+   before_action :signed_in_user,
+                only: [:index, :edit, :update, :destroy, :following, :followers]
   before_action :correct_user,   only: [:edit, :update] # Listing 9.14
   before_action :admin_user,     only: :destroy # Listing 9.46
  
@@ -64,6 +66,22 @@ class UsersController < ApplicationController
     end
   end
   # Listing 7.21
+  
+  # Listing 11.30
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
+  # end Listing 11.30
 # def create
 #   @user = User.new(params[:user])    # Not the final implementation!
 #   if @user.save

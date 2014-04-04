@@ -1,9 +1,15 @@
 RadSampleApp::Application.routes.draw do
   # get "users/new" Listing 7.3
   # Listing 7.3
-  resources :users
+  # Listing 11.18
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end # end Listing 11.18
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy] # Listing 10.22
+  resources :relationships, only: [:create, :destroy] # Listing 11.24
   root  to: 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
   # end Listing 7.3
